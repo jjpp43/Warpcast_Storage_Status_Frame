@@ -1,5 +1,6 @@
 import axios from "axios";
 import { config } from "dotenv";
+import { userId } from "./index.js";
 
 config();
 
@@ -20,11 +21,11 @@ interface LimitsResponse {
 
 
 //Export user storage data
-export let userCastStorage: number;
+export let userCastStorage: string;
 
-export let userLinkStorage: number;
+export let userLinkStorage: string;
 
-export let userReactionStorage: number;
+export let userReactionStorage: string;
 
 export let userDataStorage: number;
 
@@ -33,7 +34,7 @@ const main = async () => {
     const server = "https://hubs.airstack.xyz";
 
     try {
-        const response = await axios.get<LimitsResponse>(`${server}/v1/storageLimitsByFid?fid=406278`, {
+        const response = await axios.get<LimitsResponse>(`${server}/v1/storageLimitsByFid?fid=${userId}`, {
             headers: {
                 "Content-Type": "application/json",
                 "x-airstack-hubs": process.env.AIRSTACK_API_KEY,
@@ -51,15 +52,15 @@ const main = async () => {
         tmp.forEach((i) => {
             if (i["storeType"] === 'STORE_TYPE_CASTS') {
                 var t = i['used'] / i['limit'];
-                userCastStorage = parseFloat(t.toFixed(3)) * 100;
+                userCastStorage = (parseFloat(t.toFixed(3)) * 100).toFixed(1);
             }
             if (i["storeType"] === 'STORE_TYPE_LINKS') {
                 var t = i['used'] / i['limit'];
-                userLinkStorage = parseFloat(t.toFixed(3)) * 100;
+                userLinkStorage = (parseFloat(t.toFixed(3)) * 100).toFixed(1);
             }
             if (i["storeType"] === 'STORE_TYPE_REACTIONS') {
                 var t = i['used'] / i['limit'];
-                userReactionStorage = parseFloat(t.toFixed(3)) * 100;
+                userReactionStorage = (parseFloat(t.toFixed(3)) * 100).toFixed(1);
             }
             if (i["storeType"] === 'STORE_TYPE_USER_DATA') {
                 userDataStorage = i['used'] - 1;

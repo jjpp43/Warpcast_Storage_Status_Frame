@@ -10,6 +10,8 @@ import {
 import { handle } from 'frog/vercel'
 import { createSystem } from 'frog/ui'
 
+export let userId: number | undefined;
+
 const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
   colors: {
     customBackground: '#453ECA',
@@ -33,10 +35,17 @@ export const app = new Frog({
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
 })
 
-
+const [castStorage, reactionStorage, linkStorage, dataStorage] = await Promise.all([
+  userCastStorage,
+  userReactionStorage,
+  userLinkStorage,
+  userDataStorage
+]);
 
 app.frame('/', (c) => {
   const initFrame = `${BASE_URL}/init_frame.png`
+  userId = c.frameData?.fid;
+
   return c.res({
     action: '/status',
     image: initFrame,
@@ -50,10 +59,11 @@ app.frame('/', (c) => {
 
 app.frame('/status', (c) => {
   const { status } = c
-  const userId = c.frameData?.fid;
+
   var castTextSignal, reactionTextSignal, linkTextSignal;
 
-  var determineSignalFunction = (val: number) => {
+  var determineSignalFunction = (value: string) => {
+    var val = parseFloat(value);
     if (val > 100) {
       return <Text children=''>&#x1F7E6;</Text>
     }
@@ -69,6 +79,8 @@ app.frame('/status', (c) => {
   castTextSignal = determineSignalFunction(userCastStorage);
   reactionTextSignal = determineSignalFunction(userReactionStorage);
   linkTextSignal = determineSignalFunction(userLinkStorage);
+
+
 
 
 
@@ -92,26 +104,26 @@ app.frame('/status', (c) => {
               <Text children='' weight='600'>Cast Storage</Text>
               <Text children=''>{castTextSignal} </Text>
               <Text children=''>
-                : {userCastStorage.toFixed(1)}%
+                : {castStorage}%
               </Text>
             </HStack>
             <HStack gap="4">
               <Text children=''>Reaction Storage</Text>
               <Text children=''>{reactionTextSignal} </Text>
               <Text children=''>
-                : {userReactionStorage.toFixed(1)}%
+                : {reactionStorage}%
               </Text>
             </HStack>
             <HStack gap="4">
               <Text children=''>Link Storage</Text>
               <Text children=''>{linkTextSignal} </Text>
               <Text children=''>
-                : {userLinkStorage.toFixed(1)}%
+                : {linkStorage}%
               </Text>
             </HStack>
             <HStack gap="4">
               <Text children=''>Total # of storages you have purchased : </Text>
-              <Text children=''>{userDataStorage}</Text>
+              <Text children=''>{dataStorage}</Text>
             </HStack>
           </VStack>
           <Box height='32'></Box>
