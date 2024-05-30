@@ -1,7 +1,7 @@
 import { Button, Frog } from 'frog'
 import { devtools } from 'frog/dev'
 import { serveStatic } from 'frog/serve-static'
-import { userDataStorage, userCastStorage, userLinkStorage, userReactionStorage } from './user_storage.js'
+import { userDataStorage, userCastStorage, userLinkStorage, userReactionStorage } from './user_storage.tsx'
 import {
   getFarcasterUserDetails,
   validateFramesMessage,
