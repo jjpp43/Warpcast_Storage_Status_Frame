@@ -3,20 +3,23 @@
     "target": "ESNext",
     "module": "NodeNext",
     "skipLibCheck": true,
-
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
     "jsxImportSource": "frog/jsx",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    "types": ["frog/client"]
+    "types": [
+      "frog/client"
+    ]
   },
-  "include": ["**/*.ts", "**/*.tsx", "**/*.mtsx"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mtsx"
+  ]
 }
