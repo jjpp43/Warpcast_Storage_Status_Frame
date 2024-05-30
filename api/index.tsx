@@ -1,17 +1,21 @@
 import { Button, Frog } from 'frog'
 import { devtools } from 'frog/dev'
 import { serveStatic } from 'frog/serve-static'
-import { Box, Heading, Text, VStack, HStack, vars } from './ui.js'
 import { userDataStorage, userCastStorage, userLinkStorage, userReactionStorage } from './user_storage.js'
-
 import {
   getFarcasterUserDetails,
   validateFramesMessage,
 } from "@airstack/frog";
-
 // import { neynar } from 'frog/hubs'
 import { handle } from 'frog/vercel'
+import { createSystem } from 'frog/ui'
 
+const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
+  colors: {
+    customBackground: '#453ECA',
+    customText: '#F7F6FC',
+  }
+})
 // Uncomment to use Edge Runtime.
 // export const config = {
 //   runtime: 'edge',
