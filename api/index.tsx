@@ -1,7 +1,7 @@
 import { Button, Frog } from 'frog'
 import { devtools } from 'frog/dev'
 import { serveStatic } from 'frog/serve-static'
-import { Box, Heading, Text, VStack, HStack, vars } from '../ui/ui.js'
+import { Box, Heading, Text, VStack, HStack, vars } from './ui.js'
 import { userDataStorage, userCastStorage, userLinkStorage, userReactionStorage } from './user_storage.js'
 
 import {
