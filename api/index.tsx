@@ -10,7 +10,7 @@ import {
 import { handle } from 'frog/vercel'
 import { createSystem } from 'frog/ui'
 
-const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
+const { Box, Heading, Text, VStack, HStack, vars, Image } = createSystem({
   colors: {
     customBackground: '#453ECA',
     customText: '#F7F6FC',
@@ -26,8 +26,8 @@ const BASE_URL = process.env.PUBLIC_URL || 'http://localhost:5173'
 
 
 export const app = new Frog({
-  ui: { vars },
   assetsPath: '/',
+  ui: { vars },
   basePath: '/api',
   // Supply a Hub to enable frame verification.
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
@@ -35,11 +35,14 @@ export const app = new Frog({
 
 
 app.frame('/', (c) => {
-  const initFrame = `${BASE_URL}/init_frame.png`
+  //const initFrame = `${BASE_URL}/init_frame.png`
+  function Init() {
+    return <Image src="/init_frame.png" />
+  }
 
   return c.res({
     action: '/status',
-    image: initFrame,
+    image: Init(),
     intents: [
       <Button children='' value="myStats">Check My Stats</Button>,
     ],
@@ -171,11 +174,11 @@ app.hono.post("/gm", async (c) => {
   }
 });
 
-
+// Devtools should be called after all frames are defined
 // @ts-ignore
 const isEdgeFunction = typeof EdgeFunction !== 'undefined'
 const isProduction = isEdgeFunction || import.meta.env?.MODE !== 'development'
-devtools(app, isProduction ? { assetsPath: '/public' } : { serveStatic })
+devtools(app, isProduction ? { assetsPath: '/.frog' } : { serveStatic })
 
 export const GET = handle(app)
 export const POST = handle(app)
