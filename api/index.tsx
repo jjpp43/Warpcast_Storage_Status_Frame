@@ -14,6 +14,15 @@ const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
   colors: {
     customBackground: '#453ECA',
     customText: '#F7F6FC',
+  },
+  fonts: {
+    default: [
+      {
+        name: 'Inter',
+        source: 'google',
+        weight: 500,
+      },
+    ]
   }
 })
 // Uncomment to use Edge Runtime.
@@ -35,10 +44,26 @@ export const app = new Frog({
 
 
 app.frame('/', (c) => {
-  const initFrame = `${BASE_URL}/init_frame.png`
+  //const initFrame = `${BASE_URL}/init_frame.png`
   return c.res({
     action: '/status',
-    image: initFrame,
+    image:
+      <Box
+        grow
+        alignVertical="space-between"
+        backgroundColor="customBackground"
+        color="customText"
+        padding="24"
+      >
+        <VStack>
+          <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
+          <HStack><Text size="32" children="">to check your</Text></HStack>
+          <HStack><Text size="32" children="">storage status</Text></HStack>
+        </VStack>
+        <HStack alignHorizontal="center" alignVertical='bottom'>
+          <Text size="64" children="">&#8681; &#8681; &#8681;</Text>
+        </HStack>
+      </Box>,
     intents: [
       <Button children='' value="myStats">Check My Stats</Button>,
     ],
@@ -46,10 +71,9 @@ app.frame('/', (c) => {
 })
 
 
-
 app.frame('/status', async (c) => {
 
-  const { status } = c
+  //const { status } = c
   const id = c.frameData!.fid;
   await main(id);
 
@@ -121,16 +145,18 @@ app.frame('/status', async (c) => {
             </HStack>
           </VStack>
           <Box height='32'></Box>
-          <HStack>
-            <Text children='' size="14" weight='700'>Storage Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</Text>
+          <HStack alignHorizontal='space-between' alignVertical='bottom'>
+            <Text children='' size="14" >Storage Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</Text>
+            <Text children='' size="12" >Frame created by : @flutter</Text>
           </HStack>
+
         </VStack>
 
       </Box>
     ),
     intents: [
-      <Button.AddCastAction children='' action='/gm'>Share</Button.AddCastAction>,
-      status === 'response' && <Button.Reset children=''>Reset</Button.Reset>,
+      //<Button.AddCastAction children='' action='/gm'>Share</Button.AddCastAction>,
+      <Button.Reset children=''>Reset</Button.Reset>,
     ],
   })
 
