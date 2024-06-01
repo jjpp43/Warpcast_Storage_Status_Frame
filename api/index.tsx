@@ -86,7 +86,6 @@ app.frame('/status', async (c) => {
       return <Text children=''>&#x1F7E8;</Text>
     }
     return <Text children=''>&#x1F7E9;</Text>
-
   }
 
   castTextSignal = determineSignalFunction(userData.userCastStorage);
@@ -95,6 +94,7 @@ app.frame('/status', async (c) => {
 
   return c.res({
     imageAspectRatio: '1.91:1',
+    action: '/',
     image: (
       <Box
         grow
@@ -140,9 +140,7 @@ app.frame('/status', async (c) => {
             <Text children='' size="14" >Storage Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</Text>
             <Text children='' size="12" >Frame created by : @flutter</Text>
           </HStack>
-
         </VStack>
-
       </Box>
     ),
     intents: [
@@ -152,39 +150,6 @@ app.frame('/status', async (c) => {
   })
 
 })
-
-app.hono.post("/gm", async (c) => {
-  const body = await c.req.json();
-
-  // validate the POST body
-  const { isValid, message } = await validateFramesMessage(body);
-  const interactorFid = message?.data?.fid;
-  const castFid = message?.data.frameActionBody.castId?.fid as number;
-  if (isValid) {
-    // Check if trying to `GM` themselves
-    if (interactorFid === castFid) {
-      return c.json({ message: "Nice try." }, 400);
-    }
-
-    // Fetch user profile name
-    const { data, error } = await getFarcasterUserDetails({
-      fid: castFid,
-    });
-
-    if (error) {
-      return c.json({ message: "Error. Try Again." }, 500);
-    }
-
-    let message = `GM ${data?.profileName}!`;
-    if (message.length > 30) {
-      message = "GM!";
-    }
-
-    return c.json({ message });
-  } else {
-    return c.json({ message: "Unauthorized" }, 401);
-  }
-});
 
 // Devtools should be called after all frames are defined
 // @ts-ignore
