@@ -10,7 +10,7 @@ import {
 import { handle } from 'frog/vercel'
 import { createSystem } from 'frog/ui'
 
-const { Box, Heading, Text, VStack, HStack, vars, Image } = createSystem({
+const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
   colors: {
     customBackground: '#453ECA',
     customText: '#F7F6FC',
@@ -35,14 +35,10 @@ export const app = new Frog({
 
 
 app.frame('/', (c) => {
-  //const initFrame = `${BASE_URL}/init_frame.png`
-  function Init() {
-    return <Image src="/init_frame.png" />
-  }
-
+  const initFrame = `${BASE_URL}/init_frame.png`
   return c.res({
     action: '/status',
-    image: Init(),
+    image: initFrame,
     intents: [
       <Button children='' value="myStats">Check My Stats</Button>,
     ],
