@@ -1,7 +1,7 @@
 import { Button, Frog } from 'frog'
 import { devtools } from 'frog/dev'
 import { serveStatic } from 'frog/serve-static'
-import { userDataStorage, userCastStorage, userLinkStorage, userReactionStorage } from './userStorage.js'
+import { userData, main } from './userStorage.js'
 import {
   getFarcasterUserDetails,
   validateFramesMessage,
@@ -35,16 +35,9 @@ export const app = new Frog({
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
 })
 
-const [castStorage, reactionStorage, linkStorage, dataStorage] = await Promise.all([
-  userCastStorage,
-  userReactionStorage,
-  userLinkStorage,
-  userDataStorage
-]);
 
 app.frame('/', (c) => {
   const initFrame = `${BASE_URL}/init_frame.png`
-  userId = c.frameData?.fid;
 
   return c.res({
     action: '/status',
@@ -57,8 +50,16 @@ app.frame('/', (c) => {
 
 
 
-app.frame('/status', (c) => {
+app.frame('/status', async (c) => {
+
   const { status } = c
+  const id = c.frameData!.fid;
+  await main(id);
+
+  // console.log("User Cast Storage:", userData.userCastStorage);
+  // console.log("User Reaction Storage:", userData.userReactionStorage);
+  // console.log("User Link Storage:", userData.userLinkStorage);
+  // console.log("User Data Storage:", userData.userDataStorage);
 
   var castTextSignal, reactionTextSignal, linkTextSignal;
 
@@ -76,13 +77,9 @@ app.frame('/status', (c) => {
 
   }
 
-  castTextSignal = determineSignalFunction(userCastStorage);
-  reactionTextSignal = determineSignalFunction(userReactionStorage);
-  linkTextSignal = determineSignalFunction(userLinkStorage);
-
-
-
-
+  castTextSignal = determineSignalFunction(userData.userCastStorage);
+  reactionTextSignal = determineSignalFunction(userData.userReactionStorage);
+  linkTextSignal = determineSignalFunction(userData.userLinkStorage);
 
   return c.res({
     imageAspectRatio: '1.91:1',
@@ -104,26 +101,26 @@ app.frame('/status', (c) => {
               <Text children='' weight='600'>Cast Storage</Text>
               <Text children=''>{castTextSignal} </Text>
               <Text children=''>
-                : {castStorage}%
+                : {userData.userCastStorage}%
               </Text>
             </HStack>
             <HStack gap="4">
               <Text children=''>Reaction Storage</Text>
               <Text children=''>{reactionTextSignal} </Text>
               <Text children=''>
-                : {reactionStorage}%
+                : {userData.userReactionStorage}%
               </Text>
             </HStack>
             <HStack gap="4">
               <Text children=''>Link Storage</Text>
               <Text children=''>{linkTextSignal} </Text>
               <Text children=''>
-                : {linkStorage}%
+                : {userData.userLinkStorage}%
               </Text>
             </HStack>
             <HStack gap="4">
               <Text children=''>Total # of storages you have purchased : </Text>
-              <Text children=''>{dataStorage}</Text>
+              <Text children=''>{userData.userDataStorage}</Text>
             </HStack>
           </VStack>
           <Box height='32'></Box>
@@ -180,7 +177,7 @@ app.hono.post("/gm", async (c) => {
 // @ts-ignore
 const isEdgeFunction = typeof EdgeFunction !== 'undefined'
 const isProduction = isEdgeFunction || import.meta.env?.MODE !== 'development'
-devtools(app, isProduction ? { assetsPath: '/.frog' } : { serveStatic })
+devtools(app, isProduction ? { assetsPath: '/public' } : { serveStatic })
 
 export const GET = handle(app)
 export const POST = handle(app)
