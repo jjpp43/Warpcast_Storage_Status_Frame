@@ -31,7 +31,9 @@ const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
 // }
 
 
-const BASE_URL = process.env.PUBLIC_URL || 'http://localhost:5173'
+//const BASE_URL = process.env.PUBLIC_URL || 'http://localhost:5173'
+
+const BASE_URL = process.env.PUBLIC_URL
 
 
 export const app = new Frog({
@@ -47,23 +49,24 @@ app.frame('/', (c) => {
   //const initFrame = `${BASE_URL}/init_frame.png`
   return c.res({
     action: '/status',
-    image:
-      <Box
-        grow
-        alignVertical="space-between"
-        backgroundColor="customBackground"
-        color="customText"
-        padding="24"
-      >
-        <VStack>
-          <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
-          <HStack><Text size="32" children="">to check your</Text></HStack>
-          <HStack><Text size="32" children="">storage status</Text></HStack>
-        </VStack>
-        <HStack alignHorizontal="center" alignVertical='bottom'>
-          <Text size="64" children="">&#8681; &#8681; &#8681;</Text>
-        </HStack>
-      </Box>,
+    image: `${BASE_URL}/background.png`
+    // <Box
+    //   grow
+    //   alignVertical="space-between"
+    //   backgroundColor="customBackground"
+    //   color="customText"
+    //   padding="24"
+    // >
+    //   <VStack>
+    //     <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
+    //     <HStack><Text size="32" children="">to check your</Text></HStack>
+    //     <HStack><Text size="32" children="">storage status</Text></HStack>
+    //   </VStack>
+    //   <HStack alignHorizontal="center" alignVertical='bottom'>
+    //     <Text size="64" children="">&#8681; &#8681; &#8681;</Text>
+    //   </HStack>
+    // </Box>
+    ,
     intents: [
       <Button children='' value="myStats">Check My Stats</Button>,
     ],
