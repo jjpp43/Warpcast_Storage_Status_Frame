@@ -1,6 +1,5 @@
 import axios from "axios";
 import { config } from "dotenv";
-import { userId } from "./index.js";
 
 config();
 
@@ -71,7 +70,6 @@ export const main = async (id: number) => {
     } catch (e) {
         // Enhanced error logging
         if (axios.isAxiosError(e)) {
-            console.log("UserId: ", userId);
             console.error("Axios error:", e.message);
             if (e.response) {
                 console.error("Response data:", e.response.data);

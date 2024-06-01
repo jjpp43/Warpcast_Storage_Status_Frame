@@ -10,8 +10,6 @@ import {
 import { handle } from 'frog/vercel'
 import { createSystem } from 'frog/ui'
 
-export let userId: number | undefined;
-
 const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
   colors: {
     customBackground: '#453ECA',
@@ -93,7 +91,7 @@ app.frame('/status', async (c) => {
       >
         <VStack gap="12">
           <HStack>
-            <Heading children='' weight='700'>FID: {userId}</Heading>
+            <Heading children='' weight='700'>FID: {id}</Heading>
           </HStack>
           <Box height='8'></Box>
           <VStack gap="8">
