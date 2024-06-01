@@ -17,8 +17,6 @@ interface LimitsResponse {
     limits: Limit[];
 }
 
-
-
 //Export user storage data
 export const userData = {
     userCastStorage: "",

@@ -30,11 +30,7 @@ const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
 //   runtime: 'edge',
 // }
 
-
 //const BASE_URL = process.env.PUBLIC_URL || 'http://localhost:5173'
-
-const BASE_URL = process.env.PUBLIC_URL
-
 
 export const app = new Frog({
   assetsPath: '/',
@@ -46,7 +42,6 @@ export const app = new Frog({
 
 
 app.frame('/', (c) => {
-  const initFrame = `${BASE_URL}/init_frame.png`
   return c.res({
     action: '/status',
     image:
