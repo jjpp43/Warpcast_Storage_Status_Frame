@@ -71,15 +71,8 @@ app.frame('/', (c) => {
 
 app.frame('/status', async (c) => {
 
-  //const { status } = c
   const id = c.frameData!.fid;
   await main(id);
-
-  // console.log("User Cast Storage:", userData.userCastStorage);
-  // console.log("User Reaction Storage:", userData.userReactionStorage);
-  // console.log("User Link Storage:", userData.userLinkStorage);
-  // console.log("User Data Storage:", userData.userDataStorage);
-
   var castTextSignal, reactionTextSignal, linkTextSignal;
 
   var determineSignalFunction = (value: string) => {
@@ -160,39 +153,38 @@ app.frame('/status', async (c) => {
 
 })
 
-//To post a cast
-// app.hono.post("/gm", async (c) => {
-//   const body = await c.req.json();
+app.hono.post("/gm", async (c) => {
+  const body = await c.req.json();
 
-//   // validate the POST body
-//   const { isValid, message } = await validateFramesMessage(body);
-//   const interactorFid = message?.data?.fid;
-//   const castFid = message?.data.frameActionBody.castId?.fid as number;
-//   if (isValid) {
-//     // Check if trying to `GM` themselves
-//     if (interactorFid === castFid) {
-//       return c.json({ message: "Nice try." }, 400);
-//     }
+  // validate the POST body
+  const { isValid, message } = await validateFramesMessage(body);
+  const interactorFid = message?.data?.fid;
+  const castFid = message?.data.frameActionBody.castId?.fid as number;
+  if (isValid) {
+    // Check if trying to `GM` themselves
+    if (interactorFid === castFid) {
+      return c.json({ message: "Nice try." }, 400);
+    }
 
-//     // Fetch user profile name
-//     const { data, error } = await getFarcasterUserDetails({
-//       fid: castFid,
-//     });
+    // Fetch user profile name
+    const { data, error } = await getFarcasterUserDetails({
+      fid: castFid,
+    });
 
-//     if (error) {
-//       return c.json({ message: "Error. Try Again." }, 500);
-//     }
+    if (error) {
+      return c.json({ message: "Error. Try Again." }, 500);
+    }
 
-//     let message = `GM ${data?.profileName}!`;
-//     if (message.length > 30) {
-//       message = "GM!";
-//     }
+    let message = `GM ${data?.profileName}!`;
+    if (message.length > 30) {
+      message = "GM!";
+    }
 
-//     return c.json({ message });
-//   } else {
-//     return c.json({ message: "Unauthorized" }, 401);
-//   }
-// });
+    return c.json({ message });
+  } else {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+});
 
 // Devtools should be called after all frames are defined
 // @ts-ignore
