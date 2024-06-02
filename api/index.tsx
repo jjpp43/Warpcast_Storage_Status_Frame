@@ -58,7 +58,7 @@ app.frame('/', (c) => {
           <HStack><Text size="32" children="">storage status</Text></HStack>
         </VStack>
         <HStack alignHorizontal="center" alignVertical='bottom'>
-          <Text size="64" children="">&#8681; &#8681; &#8681;</Text>
+          <Text size="64" children="">&darr;&darr;&darr;</Text>
         </HStack>
       </Box>
     ,
