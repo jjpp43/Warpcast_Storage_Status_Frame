@@ -2,10 +2,10 @@ import { Button, Frog } from 'frog'
 import { devtools } from 'frog/dev'
 import { serveStatic } from 'frog/serve-static'
 import { userData, main } from './userStorage.js'
-import {
-  getFarcasterUserDetails,
-  validateFramesMessage,
-} from "@airstack/frog";
+// import {
+//   getFarcasterUserDetails,
+//   validateFramesMessage,
+// } from "@airstack/frog";
 // import { neynar } from 'frog/hubs'
 import { handle } from 'frog/vercel'
 import { createSystem } from 'frog/ui'
@@ -94,7 +94,7 @@ app.frame('/status', async (c) => {
 
   return c.res({
     imageAspectRatio: '1.91:1',
-    action: '/',
+    //action: '/',
     image: (
       <Box
         grow
@@ -146,6 +146,7 @@ app.frame('/status', async (c) => {
     intents: [
       //<Button.AddCastAction children='' action='/gm'>Share</Button.AddCastAction>,
       <Button.Reset children=''>Reset</Button.Reset>,
+      //<Button.AddCastAction children='' action='addCastAction'>Share</Button.AddCastAction>
     ],
   })
 
