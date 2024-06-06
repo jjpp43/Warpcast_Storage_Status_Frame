@@ -1,6 +1,6 @@
 import { Button, Frog } from 'frog'
 import { devtools } from 'frog/dev'
-import { serveStatic } from 'frog/serve-static'
+import { serveStatic } from '@hono/node-server/serve-static'
 import { userData, main } from './userStorage.js'
 // import {
 //   getFarcasterUserDetails,
@@ -30,7 +30,7 @@ const { Box, Heading, Text, VStack, HStack, vars } = createSystem({
 //   runtime: 'edge',
 // }
 
-//const BASE_URL = process.env.PUBLIC_URL || 'http://localhost:5173'
+const BASE_URL = process.env.PUBLIC_URL || 'http://localhost:5173'
 
 export const app = new Frog({
   assetsPath: '/',
@@ -40,27 +40,30 @@ export const app = new Frog({
   // hub: neynar({ apiKey: 'NEYNAR_FROG_FM' })
 })
 
+app.use('/*', serveStatic({ root: './public' }));
 
 app.frame('/', (c) => {
+  const initFrame = `${BASE_URL}/background.png`;
   return c.res({
     action: '/status',
     image:
-      <Box
-        grow
-        alignVertical="space-between"
-        backgroundColor="customBackground"
-        color="customText"
-        padding="24"
-      >
-        <VStack>
-          <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
-          <HStack><Text size="32" children="">to check your</Text></HStack>
-          <HStack><Text size="32" children="">storage status</Text></HStack>
-        </VStack>
-        <HStack alignHorizontal="center" alignVertical='bottom'>
-          <Text size="64" children="">&darr;&darr;&darr;</Text>
-        </HStack>
-      </Box>
+      initFrame
+    // <Box
+    //   grow
+    //   alignVertical="space-between"
+    //   backgroundColor="customBackground"
+    //   color="customText"
+    //   padding="24"
+    // >
+    //   <VStack>
+    //     <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
+    //     <HStack><Text size="32" children="">to check your</Text></HStack>
+    //     <HStack><Text size="32" children="">storage status</Text></HStack>
+    //   </VStack>
+    //   <HStack alignHorizontal="center" alignVertical='bottom'>
+    //     <Text size="64" children="">&darr;&darr;&darr;</Text>
+    //   </HStack>
+    // </Box>
     ,
     intents: [
       <Button children='' value="myStats">Check My Stats</Button>,
@@ -94,7 +97,7 @@ app.frame('/status', async (c) => {
 
   return c.res({
     imageAspectRatio: '1.91:1',
-    //action: '/',
+    action: '/',
     image: (
       <Box
         grow
@@ -137,7 +140,7 @@ app.frame('/status', async (c) => {
           </VStack>
           <Box height='32'></Box>
           <HStack alignHorizontal='space-between' alignVertical='bottom'>
-            <Text children='' size="14" >Storage Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</Text>
+            <Text children='' size="14" >Storage Capacity Indicator : [ &#x1F7E9; &#x1F7E9; &#x1F7E8; &#x1F7E7; ]</Text>
             <Text children='' size="12" >Frame created by : @flutter</Text>
           </HStack>
         </VStack>
@@ -145,7 +148,7 @@ app.frame('/status', async (c) => {
     ),
     intents: [
       //<Button.AddCastAction children='' action='/gm'>Share</Button.AddCastAction>,
-      <Button.Reset children=''>Reset</Button.Reset>,
+      <Button children=''>Reset</Button>
       //<Button.AddCastAction children='' action='addCastAction'>Share</Button.AddCastAction>
     ],
   })
