@@ -43,27 +43,26 @@ export const app = new Frog({
 app.use('/*', serveStatic({ root: './public' }));
 
 app.frame('/', (c) => {
-  const initFrame = `${BASE_URL}/background.png`;
+  //const initFrame = `${BASE_URL}/background.png`;
   return c.res({
     action: '/status',
     image:
-      initFrame
-    // <Box
-    //   grow
-    //   alignVertical="space-between"
-    //   backgroundColor="customBackground"
-    //   color="customText"
-    //   padding="24"
-    // >
-    //   <VStack>
-    //     <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
-    //     <HStack><Text size="32" children="">to check your</Text></HStack>
-    //     <HStack><Text size="32" children="">storage status</Text></HStack>
-    //   </VStack>
-    //   <HStack alignHorizontal="center" alignVertical='bottom'>
-    //     <Text size="64" children="">&darr;&darr;&darr;</Text>
-    //   </HStack>
-    // </Box>
+      <Box
+        grow
+        alignVertical="space-between"
+        backgroundColor="customBackground"
+        color="customText"
+        padding="24"
+      >
+        <VStack>
+          <HStack><Text size="32" weight="700" children="">Press the button below</Text></HStack>
+          <HStack><Text size="32" children="">to check your</Text></HStack>
+          <HStack><Text size="32" children="">storage status</Text></HStack>
+        </VStack>
+        <HStack alignHorizontal="center" alignVertical='bottom'>
+          <Text size="64" children="">&darr;&darr;&darr;</Text>
+        </HStack>
+      </Box>
     ,
     intents: [
       <Button children='' value="myStats">Check My Stats</Button>,
