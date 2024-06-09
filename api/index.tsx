@@ -75,7 +75,7 @@ const main = async (id: number) => {
       }
     })
 
-
+    console.log('Fetch Complete!')
 
   } catch (e) {
     // Enhanced error logging
@@ -129,7 +129,7 @@ app.use('/*', serveStatic({ root: './public' }));
 app.frame('/', (c) => {
   //const initFrame = `${BASE_URL}/background.png`;
   return c.res({
-    action: '/status',
+    //action: '/status',
     image:
       <Box
         grow
@@ -149,7 +149,7 @@ app.frame('/', (c) => {
       </Box>
     ,
     intents: [
-      <Button children='' value="myStats">Check My Stats</Button>,
+      <Button action='/status' children='' value="myStats">Check My Stats</Button>,
     ],
   })
 })
