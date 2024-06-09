@@ -76,6 +76,10 @@ const main = async (id: number) => {
     })
 
     console.log('Fetch Complete!')
+    console.log(userData.userCastStorage);
+    console.log(userData.userLinkStorage);
+    console.log(userData.userReactionStorage);
+    console.log(userData.userDataStorage);
 
   } catch (e) {
     // Enhanced error logging
@@ -162,6 +166,7 @@ app.frame('/status', async (c) => {
   var castTextSignal, reactionTextSignal, linkTextSignal;
 
   var determineSignalFunction = (value: string) => {
+    console.log('Determine Signal Function Executed!')
     var val = parseFloat(value);
     if (val > 100) {
       return <Text children=''>&#x1F7E6;</Text>
@@ -177,6 +182,12 @@ app.frame('/status', async (c) => {
   castTextSignal = determineSignalFunction(userData.userCastStorage);
   reactionTextSignal = determineSignalFunction(userData.userReactionStorage);
   linkTextSignal = determineSignalFunction(userData.userLinkStorage);
+
+  console.log(`/Status(cast) : ${userData.userCastStorage}`);
+
+  console.log(`/Status(link) : ${userData.userLinkStorage}`);
+
+  console.log(`/Status(reaction) : ${userData.userReactionStorage}`);
 
   return c.res({
     imageAspectRatio: '1.91:1',
