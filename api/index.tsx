@@ -10,7 +10,7 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { handle } from 'frog/vercel'
 import { createSystem } from 'frog/ui'
 
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 import { config } from "dotenv";
 
 config();
@@ -80,7 +80,10 @@ const main = async (id: number) => {
     console.log(userData.userLinkStorage);
     console.log(userData.userReactionStorage);
     console.log(userData.userDataStorage);
-
+    //To check what's going on with POST 302
+    if (HttpStatusCode.Found) {
+      console.log(response);
+    }
   } catch (e) {
     // Enhanced error logging
     if (axios.isAxiosError(e)) {
