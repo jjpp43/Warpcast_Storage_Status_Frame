@@ -136,7 +136,7 @@ app.use('/*', serveStatic({ root: './public' }));
 app.frame('/', (c) => {
   //const initFrame = `${BASE_URL}/background.png`;
   return c.res({
-    //action: '/status',
+    action: '/status',
     image:
       <Box
         grow
@@ -191,6 +191,8 @@ app.frame('/status', (c) => {
   console.log(`/Status(link) : ${userData.userLinkStorage}`);
 
   console.log(`/Status(reaction) : ${userData.userReactionStorage}`);
+  console.log('Request: ', c.req);
+  console.log('Error: ', c.error);
 
   return c.res({
     imageAspectRatio: '1.91:1',
