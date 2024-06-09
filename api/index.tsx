@@ -231,7 +231,7 @@ app.frame('/status', async (c) => {
     ),
     intents: [
       //<Button.AddCastAction children='' action='/gm'>Share</Button.AddCastAction>,
-      <Button children=''>Reset</Button>
+      <Button.Reset children=''>Reset</Button.Reset>
       //<Button.AddCastAction children='' action='addCastAction'>Share</Button.AddCastAction>
     ],
   })
