@@ -191,7 +191,6 @@ app.frame('/status', async (c) => {
 
   return c.res({
     imageAspectRatio: '1.91:1',
-    action: '/',
     image: (
       <Box
         grow
