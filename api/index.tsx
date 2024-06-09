@@ -159,10 +159,10 @@ app.frame('/', (c) => {
 })
 
 
-app.frame('/status', async (c) => {
+app.frame('/status', (c) => {
 
   const id = c.frameData!.fid;
-  await main(id);
+  main(id);
   var castTextSignal, reactionTextSignal, linkTextSignal;
 
   var determineSignalFunction = (value: string) => {
